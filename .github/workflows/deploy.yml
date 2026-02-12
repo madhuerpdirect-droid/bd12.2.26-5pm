@@ -1,4 +1,4 @@
-name: Deploy Vite site to Pages
+name: Deploy
 on:
   push:
     branches: ["main"]
@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
       - run: npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
