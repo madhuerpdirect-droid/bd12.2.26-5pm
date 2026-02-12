@@ -1,0 +1,7 @@
+{
+  "name": "bd12.2.26 5pm ",
+  "description": "A professional chit fund management system for tracking installments, allotments, collections, and reports with WhatsApp integration.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

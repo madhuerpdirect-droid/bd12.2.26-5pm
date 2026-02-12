@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <title>Bhadrakali Chits Manager</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0078d4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bhadrakali">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+        }
+        html, body {
+            height: 100%;
+            height: -webkit-fill-available;
+            margin: 0;
+            padding: 0;
+            overscroll-behavior-y: none;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f3f2f1; 
+            color: #323130; 
+            -webkit-font-smoothing: antialiased;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+        .ms-shadow { box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 .3px .9px 0 rgba(0,0,0,.108); }
+        .ms-border { border-color: #edebe9; }
+        .ms-bg-sidebar { background-color: #f3f2f1; }
+        .ms-bg-card { background-color: #ffffff; }
+        .ms-primary { color: #0078d4; }
+        .ms-bg-primary { background-color: #0078d4; }
+        .ms-bg-hover { background-color: #edebe9; }
+        .ms-active-nav { background-color: #ffffff; border-left: 4px solid #0078d4; font-weight: 600; color: #0078d4; }
+        
+        input, select, textarea {
+            background-color: #ffffff !important;
+            color: #323130 !important;
+            border: 1px solid #8a8886 !important;
+            border-radius: 4px !important;
+            padding: 8px 12px !important;
+            font-size: 16px !important;
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        label {
+            color: #605e5c !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        input::placeholder { color: #a19f9d !important; }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #0078d4 !important;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2) !important;
+            outline: none !important;
+            background-color: #ffffff !important;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23323130' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 10px center !important;
+            background-size: 16px !important;
+            padding-right: 36px !important;
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c8c8c8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a6a6a6; }
+
+        .animate-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Improved Height for Mobile Viewports */
+        .h-dynamic-screen {
+            height: 100vh;
+            height: 100dvh;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.3",
+    "@vercel/blob": "https://esm.sh/@vercel/blob@0.27.1"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root" class="h-dynamic-screen"></div>
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>
