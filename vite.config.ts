@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/bd12.2.26-5pm/',
   define: {
-    // This exact line connects GitHub Secrets to your website code
+    // This is the "Magic Bridge" that forces the secret into your live site
     'import.meta.env.VITE_BLOB_READ_WRITE_TOKEN': JSON.stringify(process.env.VITE_BLOB_READ_WRITE_TOKEN)
   }
 });
