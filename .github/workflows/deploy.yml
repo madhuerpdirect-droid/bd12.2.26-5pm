@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
 
-# This line kills any old, stuck builds to fix your "Multiple artifacts" error
+# This section fixes your "Multiple artifacts" error by clearing old builds
 concurrency:
   group: "pages"
   cancel-in-progress: true
