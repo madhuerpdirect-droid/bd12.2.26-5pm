@@ -25,7 +25,6 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # This line is the "key" that lets your app see the token
           VITE_BLOB_READ_WRITE_TOKEN: ${{ secrets.VITE_BLOB_READ_WRITE_TOKEN }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
