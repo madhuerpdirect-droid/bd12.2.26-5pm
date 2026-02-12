@@ -15,8 +15,6 @@ export default defineConfig({
     include: ['@vercel/blob', 'react', 'react-dom']
   },
   define: {
-    // Ensuring environment variables are available during build
-    'process.env.BLOB_READ_WRITE_TOKEN': JSON.stringify(process.env.BLOB_READ_WRITE_TOKEN || ''),
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || '')
-  }
+  'process.env.VITE_BLOB_READ_WRITE_TOKEN': JSON.stringify(process.env.VITE_BLOB_READ_WRITE_TOKEN || '')
+}
 });
