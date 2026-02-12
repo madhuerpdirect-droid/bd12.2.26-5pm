@@ -4,6 +4,11 @@ on:
   push:
     branches: ["main"]
 
+# This line kills any old, stuck builds to fix your "Multiple artifacts" error
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pages: write
