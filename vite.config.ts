@@ -1,5 +1,5 @@
 
-import { defineConfig } from 'vite';
+import {/bd12.2.26-5pm/} from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
