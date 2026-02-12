@@ -6,6 +6,8 @@ import {
 } from './types';
 import { put, list } from '@vercel/blob';
 
+const CLOUD_FILENAME = 'bhadrakali_db.json';
+
 const INITIAL_USERS: User[] = [
   { userId: 'u1', name: 'Admin User', role: UserRole.ADMIN, username: 'admin', passwordHash: 'xdr5tgb', isActive: true },
 ];
@@ -141,14 +143,17 @@ class DB {
   async syncWithCloud(): Promise<boolean> {
     if (!navigator.onLine) return false;
     const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) return false;
+    if (!token) {
+      console.warn("Sync failed: BLOB_READ_WRITE_TOKEN not found in environment.");
+      return false;
+    }
 
     this.isSyncing = true;
     if (this.onSyncChange) this.onSyncChange(true);
     
     try {
       const data = this.getSerializedData();
-      await put('database.json', data, {
+      await put(CLOUD_FILENAME, data, {
         access: 'public',
         addRandomSuffix: false,
         token: token
@@ -175,15 +180,18 @@ class DB {
 
     try {
       const { blobs } = await list({ token });
-      const dbBlob = blobs.find(b => b.pathname === 'database.json');
+      const dbBlob = blobs.find(b => b.pathname === CLOUD_FILENAME);
       if (dbBlob) {
         const response = await fetch(`${dbBlob.url}?t=${Date.now()}`);
         if (!response.ok) throw new Error("Cloud fetch failed");
         const onlineData = await response.json();
         const localDataRaw = localStorage.getItem('mi_chit_db');
         const localData = localDataRaw ? JSON.parse(localDataRaw) : null;
+        
         const onlineTime = new Date(onlineData.lastUpdated || 0).getTime();
         const localTime = new Date(localData?.lastUpdated || 0).getTime();
+        
+        // Only overwrite if cloud data is actually newer or local is missing
         if (onlineTime > localTime || !localData) {
           this.deserialize(onlineData);
           localStorage.setItem('mi_chit_db', JSON.stringify(onlineData));
@@ -192,6 +200,7 @@ class DB {
           return true;
         }
       } else {
+        // If file doesn't exist on cloud yet, push local data up
         await this.syncWithCloud();
       }
       return false;
