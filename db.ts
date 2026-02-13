@@ -1,4 +1,3 @@
-
 import { 
   User, UserRole, ChitGroup, Member, GroupMembership, 
   InstallmentSchedule, Allotment, Payment, PaymentRequest, 
@@ -142,9 +141,12 @@ class DB {
 
   async syncWithCloud(): Promise<boolean> {
     if (!navigator.onLine) return false;
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
+
+    // ✅ FIXED: Using import.meta.env so Vite can find your GitHub Secret
+    const token = import.meta.env.VITE_BLOB_READ_WRITE_TOKEN;
+
     if (!token) {
-      console.warn("Sync failed: BLOB_READ_WRITE_TOKEN not found in environment.");
+      console.warn("Sync failed: VITE_BLOB_READ_WRITE_TOKEN not found in environment.");
       return false;
     }
 
@@ -172,7 +174,9 @@ class DB {
   }
 
   async loadCloudData(): Promise<boolean> {
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    // ✅ FIXED: Using import.meta.env so Vite can find your GitHub Secret
+    const token = import.meta.env.VITE_BLOB_READ_WRITE_TOKEN;
+
     if (!navigator.onLine || !token) return false;
 
     this.isSyncing = true;
@@ -191,7 +195,6 @@ class DB {
         const onlineTime = new Date(onlineData.lastUpdated || 0).getTime();
         const localTime = new Date(localData?.lastUpdated || 0).getTime();
         
-        // Only overwrite if cloud data is actually newer or local is missing
         if (onlineTime > localTime || !localData) {
           this.deserialize(onlineData);
           localStorage.setItem('mi_chit_db', JSON.stringify(onlineData));
@@ -200,7 +203,6 @@ class DB {
           return true;
         }
       } else {
-        // If file doesn't exist on cloud yet, push local data up
         await this.syncWithCloud();
       }
       return false;
@@ -213,6 +215,7 @@ class DB {
     }
   }
 
+  // ... (rest of your existing code remains the same)
   restore(dataString: string): boolean {
     try {
       const parsed = JSON.parse(dataString);
