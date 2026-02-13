@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     base: '/bd12.2.26-5pm/',
     define: {
       // This line "bakes" the key into your website
-      'import.meta.env.VITE_BLOB_READ_WRITE_TOKEN': JSON.stringify(env.VITE_BLOB_READ_WRITE_TOKEN || process.env.VITE_BLOB_READ_WRITE_TOKEN)
+      'import.meta.env.VITE_BLOB_READ_WRITE_TOKEN': JSON.stringify(env.VITE_BLOB_READ_WRITE_TOKEN || '')
     }
   };
 });
