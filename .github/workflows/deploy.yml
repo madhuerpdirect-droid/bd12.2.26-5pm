@@ -4,7 +4,6 @@ on:
   push:
     branches: ["main"]
 
-# This section fixes your "Multiple artifacts" error by clearing old builds
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -27,10 +26,10 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-  run: npm run build
-  env:
-    VITE_BLOB_READ_WRITE_TOKEN: ${{ secrets.VITE_BLOB_READ_WRITE_TOKEN }}
-    NODE_ENV: production
+        run: npm run build
+        env:
+          VITE_BLOB_READ_WRITE_TOKEN: ${{ secrets.VITE_BLOB_READ_WRITE_TOKEN }}
+          NODE_ENV: production
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
