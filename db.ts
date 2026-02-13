@@ -140,13 +140,16 @@ class DB {
   }
 
   async syncWithCloud(): Promise<boolean> {
-    if (!navigator.onLine) return false;
+    if (!navigator.onLine) {
+      console.warn("❌ Sync BLOCKED: No internet connection");
+      return false;
+    }
 
-    // ✅ FIXED: Using import.meta.env so Vite can find your GitHub Secret
     const token = import.meta.env.VITE_BLOB_READ_WRITE_TOKEN;
 
     if (!token) {
-      console.warn("Sync failed: VITE_BLOB_READ_WRITE_TOKEN not found in environment.");
+      console.warn("❌ Sync BLOCKED: VITE_BLOB_READ_WRITE_TOKEN is EMPTY");
+      console.warn("Available env vars:", Object.keys(import.meta.env).filter(k => k.includes('VITE')));
       return false;
     }
 
@@ -155,17 +158,19 @@ class DB {
     
     try {
       const data = this.getSerializedData();
+      console.log("📤 Starting cloud sync...");
       await put(CLOUD_FILENAME, data, {
         access: 'public',
         addRandomSuffix: false,
         token: token
       });
+      console.log("✅ Synced to Vercel successfully!");
       this.isDirty = false;
       if (this.onDirtyChange) this.onDirtyChange(false);
       localStorage.setItem('mi_chit_last_sync', new Date().toISOString());
       return true;
     } catch (error) {
-      console.error("Vercel Blob Sync failed:", error);
+      console.error("❌ Vercel Blob Sync failed:", error);
       return false;
     } finally {
       this.isSyncing = false;
@@ -174,7 +179,6 @@ class DB {
   }
 
   async loadCloudData(): Promise<boolean> {
-    // ✅ FIXED: Using import.meta.env so Vite can find your GitHub Secret
     const token = import.meta.env.VITE_BLOB_READ_WRITE_TOKEN;
 
     if (!navigator.onLine || !token) return false;
@@ -215,7 +219,6 @@ class DB {
     }
   }
 
-  // ... (rest of your existing code remains the same)
   restore(dataString: string): boolean {
     try {
       const parsed = JSON.parse(dataString);
